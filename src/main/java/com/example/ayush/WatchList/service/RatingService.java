@@ -20,8 +20,18 @@ public class RatingService {
 			ResponseEntity<ObjectNode> response = template.getForEntity(apiUrl + title, ObjectNode.class);
 			
 			ObjectNode jsonObject = response.getBody();
-			System.out.println(jsonObject.path("imdbRating").asText());
-			return jsonObject.path("imdbRating").asText();
+			
+			String imdbRating = jsonObject.path("imdbRating").asText();
+			System.out.println(imdbRating);
+			
+
+            // Check if the rating is "N/A"
+            if ("N/A".equals(imdbRating)) {
+                return null; // Return null if rating is "N/A"
+            } else {
+                return imdbRating; // Return the rating string if it's a number
+            }
+			//return jsonObject.path("imdbRating").asText();
 		} catch (Exception e) {
 			//to user entered rating will be taken
 			System.out.println("Either Movie name not available or API is down" + e.getMessage());

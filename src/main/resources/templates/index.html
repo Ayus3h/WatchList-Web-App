@@ -1,60 +1,120 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Meta tags -->
-<meta charset="utf-8">
-<meta name="viewport" content="width = device-width, initial-scale = 1, shrink-to-fit = no">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<!-- Bootstrap CSS -->
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 
-<title>Watchlist App</title>
-<style>
-   body {
-  background-image: url("swan.jpg");  /* Replace with your image path */
-  background-repeat: no-repeat;  /* Optional: Control image repetition */
-  background-position: center;  /* Optional: Control image placement */
-  background-size: cover;      /* Optional: Control image size */
-}
+    <title>Watchlist App</title>
 
- </style>
- 
+    <style>
+        body {
+            background-image: url("swan.jpg");  /* Ensure 'swan.jpg' is in src/main/resources/static/ */
+            background-repeat: no-repeat;
+            background-position: center center; /* Center horizontally and vertically */
+            background-size: cover;      /* Cover the entire viewport */
+            background-attachment: fixed; /* Keep image fixed when scrolling */
+            min-height: 100vh; /* Ensure body takes full viewport height */
+            margin: 0; /* Remove default body margin */
+            display: flex; /* Use flexbox for overall layout */
+            flex-direction: column; /* Stack navbar and content vertically */
+            color: #333; /* Default text color for better readability over potentially light backgrounds */
+        }
+
+        /* Styles for the main content area */
+        .main-content-section {
+            flex-grow: 1; /* Allows this section to take available vertical space */
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Vertically center content within this section */
+            align-items: center; /* Horizontally center content within this section */
+            padding-top: 20px; /* Add some top padding */
+            padding-bottom: 20px; /* Add some bottom padding */
+        }
+
+        .main-content-container {
+            /* Using rgba for transparency */
+            background-color: rgba(131, 244, 245, 0.7); /* Your original color with 70% opacity */
+            padding: 40px; /* Uniform padding inside the container */
+            text-align: center; /* Center text within the container */
+            border-radius: 8px; /* Slightly rounded corners for a softer look */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* More prominent shadow for depth */
+            margin-top: 20px; /* Space from navbar */
+            margin-bottom: 20px; /* Space from bottom if content is short */
+            max-width: 800px; /* Limit container width for better readability on large screens */
+            width: 100%; /* Ensure it takes full width up to max-width */
+            box-sizing: border-box; /* Include padding in the element's total width and height */
+        }
+
+        /* Style for text to ensure readability over the background image */
+        .main-content-container h2,
+        .main-content-container p,
+        .main-content-container h5 {
+            color: #333; /* Darker text for better contrast */
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2); /* Slightly stronger text shadow for readability */
+        }
+
+        /* Adjust button spacing */
+        .main-content-container .btn {
+            margin: 10px; /* Add margin around buttons */
+        }
+
+        /* Responsive adjustments for smaller screens, if needed */
+        @media (max-width: 767.98px) {
+            .main-content-container {
+                padding: 20px; /* Reduce padding on small screens */
+            }
+            .main-content-container h2 {
+                font-size: 1.8rem; /* Smaller font size for h2 on small screens */
+            }
+            .main-content-container p.lead {
+                font-size: 1rem; /* Smaller font size for lead text on small screens */
+            }
+        }
+    </style>
+
 </head>
 
-<body >
-	<div class="container" style="background-color:	#83f4f5">
- 		<nav class = "navbar navbar-expand-sm navbar-dark bg-secondary">
-            <a class = "navbar-brand" href = "">Watchlist App</a>
-            <button class = "navbar-toggler" type = "button" data-toggle = "collapse" 
-               data-target = "#navbarSupportedContent" 
-               aria-controls = "navbarSupportedContent" aria-expanded = "false" 
-               aria-label = "Toggle navigation">
-               
-               <span class = "navbar-toggler-icon"></span>
-            </button>
-            
-            <div class = "collapse navbar-collapse" id = "navbarSupportedContent">
-               <ul class = "navbar-nav mr-auto">
-                  <li class = "nav-item">
-                     <a class = "nav-link active" href = "index">Home</a>
-                  </li>
-                  <li class = "nav-item">
-                     <a class = "nav-link" href = "watchlist">Watchlist</a>
-                  </li>
-                  <li class = "nav-item ">
-                     <a class = "nav-link" href = "watchlistItemForm">Submit an item</a>
-                  </li>
-               </ul>
-               
-            </div>
-      	</nav> 
-		<h2  class = "mt-4">Welcome to the Watchlist application!</h2> <br>
-		<h5 >Made for movie lovers who have a hard time choosing their next movie to watch.</h5>
-		
-	</div>
+<body>
+    <nav class="navbar navbar-expand-sm navbar-dark bg-secondary">
+        <a class="navbar-brand" href="">Watchlist App</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse"
+           data-target="#navbarSupportedContent"
+           aria-controls="navbarSupportedContent" aria-expanded="false"
+           aria-label="Toggle navigation">
+           <span class="navbar-toggler-icon"></span>
+        </button>
 
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+           <ul class="navbar-nav mr-auto">
+              <li class="nav-item">
+                 <a class="nav-link active" href="index">Home</a>
+              </li>
+              <li class="nav-item">
+                 <a class="nav-link" href="watchlist">Watchlist</a>
+              </li>
+              <li class="nav-item ">
+                 <a class="nav-link" href="watchlistItemForm">Submit an item</a>
+              </li>
+           </ul>
+        </div>
+    </nav>
+
+    <div class="main-content-section">
+        <div class="container main-content-container">
+            <h2 class="display-4 mb-3">Welcome to the Watchlist application!</h2>
+            <p class="lead mb-4">Discover, track, and manage all the movies you're eager to watch. Never forget a film recommendation again!</p>
+            <h5 class="mb-4">Made for movie lovers who have a hard time choosing their next movie to watch.</h5>
+
+            <a href="watchlist" class="btn btn-primary btn-lg">View My Watchlist</a>
+            <a href="watchlistItemForm" class="btn btn-success btn-lg">Add a New Movie</a>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 
 </body>
 </html>

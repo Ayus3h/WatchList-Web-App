@@ -1,72 +1,181 @@
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-<meta name="viewport" content="width = device-width, initial-scale = 1, shrink-to-fit = no">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<!-- Bootstrap CSS -->
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 
-<title>Watchlist App</title>
+    <title>Watchlist App</title>
+    <style>
+        body {
+            background-color: #E0F2F7; /* Light, calming blue/teal background for the whole page */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* A more modern font */
+        }
+
+        .main-content-wrapper {
+            padding-top: 20px; /* Space from navbar */
+            padding-bottom: 20px; /* Space at the bottom */
+        }
+
+        .watchlist-container {
+            background-color: #F8F8F8; /* A very light grey/off-white for better contrast with the table */
+            border-radius: 10px; /* Rounded corners */
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1); /* Soft, noticeable shadow */
+            padding: 30px; /* Internal padding */
+            margin-top: 30px; /* Space from the top of the content wrapper */
+        }
+
+        h2.page-title {
+            color: #2c3e50; /* A darker, professional blue-grey for headings */
+            margin-bottom: 25px; /* More space below the title */
+            font-weight: 600; /* Slightly bolder */
+            text-align: center; /* Center the heading */
+        }
+
+        /* Table styling */
+        .table {
+            margin-top: 20px;
+            border-collapse: separate; /* Allows border-radius on cells (though not directly applied here) */
+            border-spacing: 0 8px; /* Space between rows */
+        }
+
+        .table thead th {
+            background-color: #6C7A89; /* Darker header background */
+            color: #FFFFFF; /* White text for header */
+            border: none; /* Remove default borders */
+            padding: 12px 15px; /* More padding */
+            font-weight: 700; /* Bolder header text */
+            text-transform: uppercase; /* Uppercase header text */
+            letter-spacing: 0.5px; /* Slight letter spacing */
+            border-radius: 5px 5px 0 0; /* Rounded top corners for the header */
+        }
+        
+        .table thead tr:first-child th:first-child {
+            border-top-left-radius: 8px; /* More prominent radius for first header cell */
+        }
+        .table thead tr:first-child th:last-child {
+            border-top-right-radius: 8px; /* More prominent radius for last header cell */
+        }
+
+        .table tbody tr {
+            background-color: #FFFFFF; /* White background for rows */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); /* Subtle shadow for each row */
+            transition: transform 0.2s ease-in-out; /* Smooth hover effect */
+        }
+
+        .table tbody tr:hover {
+            transform: translateY(-3px); /* Lift rows slightly on hover */
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Stronger shadow on hover */
+        }
+
+        .table tbody tr:nth-child(even) {
+            background-color: #F0F8FF; /* Light blue/grey for even rows (zebra stripping) */
+        }
+
+        .table td {
+            padding: 12px 15px; /* More padding in cells */
+            vertical-align: middle; /* Vertically align content in cells */
+            border: none; /* Remove default cell borders */
+        }
+        
+        /* Adjust for the last row if it's not the last actual data row */
+        .table tbody tr:last-child {
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+        }
+
+        /* Update button style enhancement */
+        .btn-info {
+            background-color: #3498db; /* A vibrant blue */
+            border-color: #3498db;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        .btn-info:hover {
+            background-color: #2980b9; /* Darker blue on hover */
+            border-color: #2980b9;
+            transform: translateY(-1px); /* Slight lift on hover */
+        }
+
+        /* Footer-like section for movie count */
+        .movie-count-section {
+            text-align: center;
+            margin-top: 30px;
+            padding: 15px 20px;
+            background-color: #D6EAF8; /* Light blue background */
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            font-size: 1.1em; /* Slightly larger font */
+            font-weight: 500;
+            color: #2c3e50;
+        }
+    </style>
 </head>
 
 <body>
-	<div class="container">
- 		<nav class = "navbar navbar-expand-sm navbar-dark bg-secondary">
-            <a class = "navbar-brand" href = "">Watchlist App</a>
-            <button class = "navbar-toggler" type = "button" data-toggle = "collapse" 
-               data-target = "#navbarSupportedContent" 
-               aria-controls = "navbarSupportedContent" aria-expanded = "false" 
-               aria-label = "Toggle navigation">
-               
-               <span class = "navbar-toggler-icon"></span>
+    <div class="main-content-wrapper">
+        <nav class="navbar navbar-expand-sm navbar-dark bg-secondary">
+            <a class="navbar-brand" href="">Watchlist App</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse"
+               data-target="#navbarSupportedContent"
+               aria-controls="navbarSupportedContent" aria-expanded="false"
+               aria-label="Toggle navigation">
+               <span class="navbar-toggler-icon"></span>
             </button>
-            
-            <div class = "collapse navbar-collapse" id = "navbarSupportedContent">
-               <ul class = "navbar-nav mr-auto">
-                  <li class = "nav-item">
-                     <a class = "nav-link" href = "index">Home</a>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+               <ul class="navbar-nav mr-auto">
+                  <li class="nav-item">
+                     <a class="nav-link" href="index">Home</a>
                   </li>
-                  <li class = "nav-item active">
-                     <a class = "nav-link" href = "watchlist">Watchlist</a>
+                  <li class="nav-item active">
+                     <a class="nav-link" href="watchlist">Watchlist</a>
                   </li>
-                  <li class = "nav-item ">
-                     <a class = "nav-link" href = "watchlistItemForm">Submit an item</a>
+                  <li class="nav-item ">
+                     <a class="nav-link" href="watchlistItemForm">Submit an item</a>
                   </li>
                </ul>
-               
             </div>
-      	</nav> 
-		<h2  class = "mt-4">Watchlist</h2>
-		<table class="table">
-			<thead class = "thead-light">
-		        <tr>
-		            <th class="text-left">Title</th>
-		            <th class="text-left">Rating</th>
-		            <th class="text-left">Priority</th>
-		            <th class="text-left">Comment</th>
-		            <th class="text-left"></th>
-		        </tr>
-		    </thead>
-			<tbody>
-				<tr th:each="movierow :${watchlistrows}">
-		            <td th:text="${movierow.title}">Avatar</td>
-		            <td th:text="${movierow.rating}">7.8</td>
-		            <td th:text="${movierow.priority}">LOW</td>
-		            <td th:text="${movierow.comment}">Peter recommended</td>
-					<td><a href="#" class="btn btn-info" role="button" th:href="@{/watchlistItemForm(id=${movierow.id})}">Update</a></td>
-				</tr>
-			</tbody>
-		</table>
-		<hr/>
-		<div >
-			<div>Number of movies to watch: <span th:text="${noofmovies}"> </div>	 
-		</div>
-		
-	</div>
+        </div>
+      </nav>
+        <div class="container watchlist-container">
+            <h2 class="page-title mt-4">Your Watchlist</h2> <table class="table">
+                <thead class="thead-light">
+                    <tr>
+                        <th class="text-left">Title</th>
+                        <th class="text-left">Rating</th>
+                        <th class="text-left">Priority</th>
+                        <th class="text-left">Comment</th>
+                        <th class="text-left">Actions</th> </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="movierow :${watchlistrows}">
+                        <td th:text="${movierow.title}">Avatar</td>
+                        <td th:text="${movierow.rating}">7.8</td>
+                        <td th:text="${movierow.priority}">LOW</td>
+                        <td th:text="${movierow.comment}">Peter recommended</td>
+                        <td>
+                            <a href="#" class="btn btn-info btn-sm" role="button" th:href="@{/watchlistItemForm(id=${movierow.id})}">Update</a>
+                            </td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(watchlistrows)}">
+                        <td colspan="5" class="text-center py-4 text-muted">
+                            Your watchlist is empty! <a href="watchlistItemForm">Add some movies.</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <hr/>
+            <div class="movie-count-section">
+                Number of movies to watch: <span th:text="${noofmovies}">0</span>
+            </div>
+        </div>
+    </div>
 
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 
 </body>
 </html>

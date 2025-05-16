@@ -1,98 +1,184 @@
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-   <head>
-      <meta charset = "utf-8">
-      <meta name = "viewport" content = "width = device-width, initial-scale = 1, shrink-to-fit = no">
-      <link rel = "stylesheet" href = "https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-      <title>Watchlist App</title>
-   </head>
-   <body>
-      <div class = "container">
- 		<nav class = "navbar navbar-expand-sm navbar-dark bg-secondary">
-            <a class = "navbar-brand" href = "">Watchlist App</a>
-            <button class = "navbar-toggler" type = "button" data-toggle = "collapse" 
-               data-target = "#navbarSupportedContent" 
-               aria-controls = "navbarSupportedContent" aria-expanded = "false" 
-               aria-label = "Toggle navigation">
-               
-               <span class = "navbar-toggler-icon"></span>
-            </button>
-            
-            <div class = "collapse navbar-collapse" id = "navbarSupportedContent">
-               <ul class = "navbar-nav mr-auto">
-                  <li class = "nav-item">
-                     <a class = "nav-link" href = "index">Home</a>
-                  </li>
-                  <li class = "nav-item">
-                     <a class = "nav-link" href = "watchlist">Watchlist</a>
-                  </li>
-                  <li class = "nav-item active">
-                     <a class = "nav-link" href = "watchlistItemForm">Submit an item</a>
-                  </li>
-               </ul>
-               
-            </div>
-      	</nav>         
-         <form action="#" method="post" th:action="@{/watchlistItemForm}" th:object="${watchlistItem}">
-            <h2 class = "mt-4">Submit an item</h2>
-            <hr/>
-            <!-- Form levels error messages here -->
-            <div class = "form-group row ">
-               <div class="col-sm-8">
-        			<span class="text-danger" > </span>      
-      			</div>
-            </div>
-            <div class = "form-group row ">
-               <label for = "title" class = "col-sm-2 col-form-label">Title</label>
-               <div class = "col-sm-4">
-                  <input th:field="*{title}" type = "text" class = "form-control" placeholder = "Mandatory">
-               </div>
-               <div class="col-sm-4">
-        			<span class="text-danger" th:errors="*{title}"> </span>      
-      			</div>
-            </div>
-            
-            <div class = "form-group row ">
-               <label for = "rating" class = "col-sm-2 col-form-label mr-0">Rating</label>
-               <div class = "col-sm-4">
-                  <input th:field="*{rating}" type = "text" class = "form-control" placeholder = "5.0 < Number < 10.0">
-               </div>
-               <div class="col-sm-4">
-        			<span class="text-danger" th:errors="*{rating}"> </span>      
-      			</div>
-            </div>
-               
-            <div class = "form-group row ">
-               <label for = "priority" class = "col-sm-2 col-form-label mr-0">Priority</label>
-               <div class = "col-sm-4">
-                  <input th:field="*{priority}" type = "text" class = "form-control" placeholder = "L|M|H">
-               </div>
-               <div class="col-sm-4">
-        			<span class="text-danger" th:errors="*{priority}"> </span>      
-      			</div>
-            </div>
-               
-            <div class = "form-group row">
-            	<label for = "comments" class = "col-sm-2 col-form-label">Comments</label>
-            	<div class = "col-sm-4">
-               		<textarea th:field="*{comment}" class = "form-control" rows = "3" placeholder = "Max. 50 chars"></textarea>
-               </div>
-               <div class="col-sm-4">
-        			<span class="text-danger" th:errors = "*{comment}"> </span>      
-      			</div>
-            </div>
-            
-            <div class = "form-group row">
-               <div class = "col-sm-10">
-				   <input type="hidden" th:field="*{id}" />
-                  <button type = "submit" class = "btn btn-primary">Submit</button>
-               </div>            
-            </div>
-            
-         </form>
-      </div>
-      
-      <script src = "https://code.jquery.com/jquery-3.3.1.slim.min.js"> </script>
-      <script src = "https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" > </script>
-      <script src = "https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" > </script> 
-   </body>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <title>Watchlist App</title>
+    <style>
+        body {
+            background-color: #FFF8DC; /* Creamy off-white for the entire body */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Modern font */
+            display: flex; /* Flexbox for overall layout */
+            flex-direction: column; /* Stack navbar and content vertically */
+            min-height: 100vh; /* Ensure body takes full viewport height */
+            margin: 0; /* Remove default body margin */
+        }
+
+        .main-content-section {
+            flex-grow: 1; /* Allows this section to take available vertical space */
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Vertically center content within this section */
+            align-items: center; /* Horizontally center content within this section */
+            padding-top: 20px; /* Space from navbar */
+            padding-bottom: 20px; /* Space at the bottom */
+        }
+
+        .form-container-wrapper {
+            background-color: #FFFFFF; /* White background for the form container */
+            border-radius: 10px; /* Rounded corners */
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+            padding: 30px; /* Internal padding */
+            margin-top: 30px; /* Space from the top of the content wrapper */
+            max-width: 700px; /* Limit form width for better readability */
+            width: 100%; /* Ensure it takes full width up to max-width */
+            box-sizing: border-box; /* Include padding in the element's total width and height */
+        }
+
+        h2.form-title {
+            color: #2c3e50; /* Darker heading color */
+            margin-bottom: 25px; /* More space below the title */
+            font-weight: 600; /* Slightly bolder */
+            text-align: center; /* Center the heading */
+        }
+
+        hr {
+            border-top: 1px solid rgba(0, 0, 0, 0.1); /* Lighter hr line */
+            margin-bottom: 30px; /* Space after hr */
+        }
+
+        .form-group label {
+            font-weight: 500; /* Slightly bolder labels */
+            color: #34495e; /* Darker grey for labels */
+        }
+
+        .form-control {
+            border-radius: 5px; /* Slightly rounded input fields */
+            border: 1px solid #ced4da; /* Default Bootstrap border */
+            padding: 10px 15px; /* More padding in input fields */
+            font-size: 1rem;
+        }
+
+        .form-control:focus {
+            border-color: #88BBDD; /* Highlight border on focus */
+            box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25); /* Subtle blue shadow on focus */
+        }
+
+        .text-danger {
+            font-size: 0.9em; /* Smaller font for error messages */
+            font-weight: 500;
+        }
+
+        .btn-primary {
+            background-color: #28a745; /* Green for submit button */
+            border-color: #28a745;
+            padding: 10px 30px; /* More padding for button */
+            font-size: 1.1em;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #218838; /* Darker green on hover */
+            border-color: #1e7e34;
+            transform: translateY(-1px); /* Slight lift on hover */
+        }
+
+        /* Responsive adjustments for smaller screens */
+        @media (max-width: 767.98px) {
+            .form-container-wrapper {
+                padding: 20px; /* Reduce padding on small screens */
+            }
+            .form-group label {
+                text-align: left !important; /* Ensure labels align left on small screens */
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-sm navbar-dark bg-secondary">
+        <a class="navbar-brand" href="">Watchlist App</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse"
+           data-target="#navbarSupportedContent"
+           aria-controls="navbarSupportedContent" aria-expanded="false"
+           aria-label="Toggle navigation">
+           <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+           <ul class="navbar-nav mr-auto">
+              <li class="nav-item">
+                 <a class="nav-link" href="index">Home</a>
+              </li>
+              <li class="nav-item">
+                 <a class="nav-link" href="watchlist">Watchlist</a>
+              </li>
+              <li class="nav-item active">
+                 <a class="nav-link" href="watchlistItemForm">Submit an item</a>
+              </li>
+           </ul>
+        </div>
+    </nav>
+
+    <div class="main-content-section">
+        <div class="container form-container-wrapper">
+            <form action="#" method="post" th:action="@{/watchlistItemForm}" th:object="${watchlistItem}">
+                <h2 class="form-title">Submit a New Watchlist Item</h2> <hr/>
+                <div th:if="${#fields.hasErrors('global')}" class="alert alert-danger" role="alert">
+                    <p th:each="err : ${#fields.errors('global')}" th:text="${err}"></p>
+                </div>
+
+                <div class="form-group row ">
+                    <label for="title" class="col-sm-2 col-form-label">Title</label>
+                    <div class="col-sm-6"> <input th:field="*{title}" type="text" class="form-control" placeholder="Movie Title (e.g., Inception)">
+                    </div>
+                    <div class="col-sm-4">
+                        <span class="text-danger" th:errors="*{title}"> </span>
+                    </div>
+                </div>
+
+                <div class="form-group row ">
+                    <label for="rating" class="col-sm-2 col-form-label">Rating</label>
+                    <div class="col-sm-6">
+                        <input th:field="*{rating}" type="text" class="form-control" placeholder="Optional (5.0 to 10.0)">
+                    </div>
+                    <div class="col-sm-4">
+                        <span class="text-danger" th:errors="*{rating}"> </span>
+                    </div>
+                </div>
+
+                <div class="form-group row ">
+                    <label for="priority" class="col-sm-2 col-form-label">Priority</label>
+                    <div class="col-sm-6">
+                        <input th:field="*{priority}" type="text" class="form-control" placeholder="L (Low), M (Medium), H (High)">
+                    </div>
+                    <div class="col-sm-4">
+                        <span class="text-danger" th:errors="*{priority}"> </span>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="comment" class="col-sm-2 col-form-label">Comments</label>
+                    <div class="col-sm-6">
+                        <textarea th:field="*{comment}" class="form-control" rows="3" placeholder="Add your notes about the movie (Max. 50 chars)"></textarea>
+                    </div>
+                    <div class="col-sm-4">
+                        <span class="text-danger" th:errors="*{comment}"> </span>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-sm-12 text-center"> <input type="hidden" th:field="*{id}" />
+                        <button type="submit" class="btn btn-primary">Submit Item</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+</body>
 </html>
