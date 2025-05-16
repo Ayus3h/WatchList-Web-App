@@ -29,26 +29,25 @@ Welcome to the Watchlist App! This is a **comprehensive web application** built 
     * Spring Boot (v3.2.x or v3.3.x - *adjust to your exact version*)
     * Maven (for dependency management and build automation)
     * Spring Data JPA (for seamless database interaction)
-    * (Specify your database here, e.g., **H2 Database**, **MySQL**, **PostgreSQL**)
+    * Database used: **H2 Database**, **MySQL**, **MongoDB**
 * **Frontend:**
     * HTML
     * CSS (with custom styles and Bootstrap 4)
     * JavaScript (for Bootstrap's interactive components)
 * **API Integration:**
-    * (Specify the API you used, e.g., **OMDB API**, **TMDB API**)
+    * API used: **TMDB API**
 
 ---
 
 ## 🗄️ Database
 
-The application uses **(mention your database, e.g., H2)** to store watchlist items.
-* **For H2 (in-memory/file-based):** No external setup is typically required for development.
-* **For external databases (e.g., MySQL):** Ensure your database server is running and configured correctly. You'll need to update `src/main/resources/application.properties` with your database connection details.
+The application uses **H2 Database** to store watchlist items.
+* **Why H2 (in-memory/file-based):** No external setup is typically required for development.
 
 ---
 
 ## 🔗 API Integration
 
-Movie details are fetched from the **(mention your API, e.g., OMDB API)** when adding a new watchlist item. An API key is required for this service. Ensure your API key is configured in `src/main/resources/application.properties` like this:
+Movie details are fetched from the **(IMDB API)** when adding a new watchlist item. An API key is required for this service.
 ```properties
 api.omdb.key=YOUR_ACTUAL_API_KEY
