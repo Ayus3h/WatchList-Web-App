@@ -67,5 +67,5 @@ Submit Item Form
 Feel free to fork the repository, make improvements, and submit pull requests. Any contributions are welcome!
 
 📞 Contact
-For any questions or suggestions, feel free to reach out.```properties
+For any questions or suggestions, feel free to reach out.
 api.omdb.key=YOUR_ACTUAL_API_KEY
