@@ -55,13 +55,13 @@ Movie details are fetched from the **OMDB API** when adding a new watchlist item
 Here are some glimpses of the Watchlist App in action:
 
 Home Page
-<img src="images/homepage_screenshot.png" alt="Home Page Screenshot">
+<img src="images/HomePage.png" alt="Home Page Screenshot">
 
 Watchlist Page
-<img src="images/homepage_screenshot.png" alt="Home Page Screenshot">
+<img src="images/Watchlist.png" alt="Home Page Screenshot">
 
 Submit Item Form
-<img src="images/homepage_screenshot.png" alt="Home Page Screenshot">
+<img src="images/Form.png" alt="Home Page Screenshot">
 
 🤝 Contributing
 Feel free to fork the repository, make improvements, and submit pull requests. Any contributions are welcome!
